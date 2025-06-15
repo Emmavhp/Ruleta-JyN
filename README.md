@@ -1,4 +1,4 @@
-# Ruleta-JyN
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
