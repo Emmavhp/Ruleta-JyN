@@ -529,6 +529,547 @@
             </div>
 
             <!-- Panel de Configuración de Giro -->
+            <div class="control-panel<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ruleta JyN Store</title>
+   </head>
+ <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .roblox-icon {
+            width: 60px;
+            height: 60px;
+            background: #FF4444;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 68, 68, 0.3);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #FF4444;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .container {
+            text-align: center;
+            max-width: 1400px;
+            width: 100%;
+            padding: 20px;
+        }
+
+        .wheel-container {
+            position: relative;
+            display: inline-block;
+            margin: 30px 0;
+        }
+
+        .wheel-svg {
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            border: 6px solid #FF4444;
+            box-shadow: 0 0 30px rgba(255, 68, 68, 0.4);
+            transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+            background: #000;
+        }
+
+        .pointer {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-top: 40px solid #FF4444;
+            z-index: 10;
+            filter: drop-shadow(0 3px 6px rgba(0,0,0,0.4));
+        }
+
+        .spin-button {
+            background: linear-gradient(45deg, #FF4444, #CC3333);
+            border: 2px solid #FF4444;
+            padding: 15px 40px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 30px 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 68, 68, 0.3);
+            text-transform: uppercase;
+        }
+
+        .spin-button:hover {
+            background: linear-gradient(45deg, #CC3333, #AA2222);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 68, 68, 0.4);
+        }
+
+        .spin-button:disabled {
+            background: #666;
+            border-color: #666;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .controls-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .control-panel {
+            background: rgba(255, 68, 68, 0.1);
+            border: 2px solid #FF4444;
+            border-radius: 15px;
+            padding: 25px;
+        }
+
+        .control-panel h3 {
+            color: #FF4444;
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+            text-align: center;
+        }
+
+        .sections-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .section-item {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #FF4444;
+            border-radius: 10px;
+            padding: 15px;
+            display: grid;
+            grid-template-columns: 2fr 80px 1fr;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .section-item input {
+            padding: 8px 12px;
+            border: 2px solid #FF4444;
+            border-radius: 5px;
+            background: rgba(0,0,0,0.5);
+            color: white;
+            font-size: 1rem;
+        }
+
+        .section-item input:focus {
+            outline: none;
+            border-color: #FF6666;
+            box-shadow: 0 0 10px rgba(255, 68, 68, 0.3);
+        }
+
+        .section-controls {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+        }
+
+        .color-picker {
+            width: 35px;
+            height: 35px;
+            border: 2px solid #FF4444;
+            border-radius: 5px;
+            cursor: pointer;
+            background: transparent;
+        }
+
+        .remove-btn {
+            background: #FF4444;
+            border: none;
+            color: white;
+            padding: 8px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .remove-btn:hover {
+            background: #CC3333;
+        }
+
+        .add-section {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin: 20px 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+        }
+
+        .add-section:hover {
+            background: linear-gradient(45deg, #20c997, #17a2b8);
+            transform: translateY(-2px);
+        }
+
+        .update-button {
+            background: linear-gradient(45deg, #333, #555);
+            border: 2px solid #FF4444;
+            padding: 15px 30px;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin: 20px 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 68, 68, 0.3);
+        }
+
+        .update-button:hover {
+            background: linear-gradient(45deg, #555, #777);
+            transform: translateY(-2px);
+        }
+
+        .spin-settings {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .setting-item {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .setting-item label {
+            color: #FF4444;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .setting-item input {
+            padding: 10px;
+            border: 2px solid #FF4444;
+            border-radius: 5px;
+            background: rgba(0,0,0,0.5);
+            color: white;
+            font-size: 1rem;
+        }
+
+        .setting-item input:focus {
+            outline: none;
+            border-color: #FF6666;
+            box-shadow: 0 0 10px rgba(255, 68, 68, 0.3);
+        }
+
+        .probability-display {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #FF4444;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .probability-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 8px 0;
+            padding: 8px;
+            border-radius: 5px;
+            background: rgba(255,255,255,0.05);
+        }
+
+        .probability-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 3px;
+            border: 1px solid #fff;
+            margin-right: 10px;
+        }
+
+        .links-section {
+            background: rgba(0,0,0,0.5);
+            border: 2px solid #FF4444;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .link-button {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 25px;
+            background: linear-gradient(45deg, #FF4444, #CC3333);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 68, 68, 0.3);
+        }
+
+        .link-button:hover {
+            background: linear-gradient(45deg, #CC3333, #AA2222);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 68, 68, 0.4);
+        }
+
+        .total-probability {
+            background: rgba(255, 68, 68, 0.2);
+            border: 2px solid #FF4444;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .error {
+            color: #FF6666;
+            background: rgba(255, 102, 102, 0.2);
+            border: 1px solid #FF6666;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+
+        .success {
+            color: #28a745;
+            background: rgba(40, 167, 69, 0.2);
+            border: 1px solid #28a745;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+
+        .result-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .result-content {
+            background: linear-gradient(45deg, #FF4444, #CC3333);
+            padding: 40px;
+            border-radius: 20px;
+            border: 4px solid #FF4444;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            max-width: 500px;
+            animation: slideIn 0.5s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result-content.rare-prize {
+            background: linear-gradient(45deg, #FFD700, #FFA500, #FF4500);
+            border-color: #FFD700;
+            animation: slideIn 0.5s ease-out, rarePulse 2s infinite;
+            box-shadow: 0 0 50px rgba(255, 215, 0, 0.8);
+        }
+
+        .result-content.rare-prize::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shine 2s infinite;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #FFD700;
+            animation: confettiFall 3s linear infinite;
+        }
+
+        .coupon-status {
+            background: rgba(255, 68, 68, 0.2);
+            border: 2px solid #FF4444;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: scale(0.8) translateY(-50px); opacity: 0; }
+            to { transform: scale(1) translateY(0); opacity: 1; }
+        }
+
+        @keyframes rarePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .wheel-svg {
+                width: 320px;
+                height: 320px;
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .controls-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-item {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .section-controls {
+                justify-content: center;
+            }
+
+            .spin-settings {
+                grid-template-columns: 1fr;
+            }
+
+            .links-section {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="roblox-icon">👑</div>
+            <h1>Ruleta JyN Store</h1>
+            <div class="roblox-icon">👑</div>
+        </div>
+        
+        <div class="wheel-container">
+            <div class="pointer"></div>
+            <canvas class="wheel-svg" id="wheelCanvas" width="400" height="400"></canvas>
+        </div>
+
+        <button class="spin-button" id="spinButton" onclick="spinWheel()">
+            🎯 ¡GIRAR RULETA!
+        </button>
+
+        <div class="controls-grid">
+            <!-- Panel de Secciones -->
+            <div class="control-panel">
+                <h3>⚙️ Configurar Secciones</h3>
+                <div class="sections-container" id="sectionsContainer">
+                    <!-- Las secciones se generarán dinámicamente -->
+                </div>
+                
+                <div style="text-align: center;">
+                    <button class="add-section" onclick="addSection()">+ Agregar Sección</button>
+                    <button class="update-button" onclick="updateWheel()">🔄 Actualizar</button>
+                </div>
+                
+                <div class="total-probability" id="totalProbability">
+                    Total de Probabilidades: 0%
+                </div>
+            </div>
+
+            <!-- Panel de Configuración de Giro -->
             <div class="control-panel">
                 <h3>🎛️ Configuración de Giro</h3>
                 <div class="spin-settings">
@@ -566,6 +1107,8 @@
     <script>
         let isSpinning = false;
         let currentRotation = 0;
+        let couponUsed = false;
+        let couponLoaded = false;
         let sections = [
             { name: "Descuento 50%", probability: 10, color: "#FF4444", type: "discount", value: 50 },
             { name: "Descuento 20%", probability: 20, color: "#FF6666", type: "discount", value: 20 },
@@ -626,6 +1169,26 @@
             return colors[Math.floor(Math.random() * colors.length)];
         }
 
+        function updateCouponStatus() {
+            let statusElement = document.getElementById('couponStatus');
+            if (!statusElement) {
+                statusElement = document.createElement('div');
+                statusElement.id = 'couponStatus';
+                statusElement.className = 'coupon-status';
+                
+                const firstControlPanel = document.querySelector('.control-panel');
+                firstControlPanel.appendChild(statusElement);
+            }
+            
+            if (!couponLoaded) {
+                statusElement.innerHTML = '<span class="error">❌ Debes canjear un cupón para girar</span>';
+            } else if (couponUsed) {
+                statusElement.innerHTML = '<span class="error">❌ Cupón ya utilizado</span>';
+            } else {
+                statusElement.innerHTML = '<span class="success">✅ Cupón canjeado - Listo para girar</span>';
+            }
+        }
+
         function renderSections() {
             const container = document.getElementById('sectionsContainer');
             container.innerHTML = '';
@@ -645,6 +1208,7 @@
             });
 
             updateProbabilityDisplay();
+            updateCouponStatus();
         }
 
         function addSection() {
@@ -811,183 +1375,330 @@
                 if (pointerAngle >= accumulatedAngle && pointerAngle < accumulatedAngle + sectionAngle) {
                     return { section: sections[i], index: i };
                 }
-                accumulatedAngle += sectionAngle;
+                 accumulatedAngle += sectionAngle;
             }
             
+            // Fallback al primer elemento
             return { section: sections[0], index: 0 };
         }
 
-        function createConfetti() {
-            const colors = ['#FFD700', '#FF4500', '#FF69B4', '#00CED1', '#32CD32', '#FF1493'];
-            
-            for (let i = 0; i < 50; i++) {
-                const confetti = document.createElement('div');
-                confetti.className = 'confetti';
-                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                confetti.style.left = Math.random() * 100 + '%';
-                confetti.style.animationDelay = Math.random() * 3 + 's';
-                confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
-                document.body.appendChild(confetti);
-                
-                setTimeout(() => {
-                    confetti.remove();
-                }, 5000);
-            }
-        }
-
-function spinWheel() {
+        function spinWheel() {
             if (isSpinning) return;
             
-            const totalProbability = sections.reduce((sum, section) => sum + section.probability, 0);
-            if (totalProbability !== 100) {
-                alert('⚠️ Configura las probabilidades correctamente antes de girar (debe sumar 100%)');
+            if (!couponLoaded) {
+                alert('❌ Debes canjear un cupón antes de girar la ruleta');
+                return;
+            }
+            
+            if (couponUsed) {
+                alert('❌ El cupón ya ha sido utilizado');
                 return;
             }
 
-            if (sections.length === 0) {
-                alert('⚠️ Agrega al menos una sección para girar');
+            const totalProbability = sections.reduce((sum, section) => sum + section.probability, 0);
+            if (totalProbability !== 100) {
+                alert('⚠️ Configura las probabilidades correctamente (total 100%)');
                 return;
             }
 
             isSpinning = true;
             const spinButton = document.getElementById('spinButton');
             spinButton.disabled = true;
-            spinButton.textContent = '🌀 GIRANDO...';
+            spinButton.textContent = '🔄 Girando...';
 
-            // Obtener configuración de giro
             const duration = parseFloat(document.getElementById('spinDuration').value) * 1000;
-            const speed = parseFloat(document.getElementById('spinSpeed').value);
+            const baseRotations = parseFloat(document.getElementById('spinSpeed').value);
+            const randomRotation = Math.random() * 360;
+            const totalRotation = baseRotations * 360 + randomRotation;
 
-            // Calcular ángulo final basado en probabilidades
-            const randomValue = Math.random() * 100;
-            let accumulatedProbability = 0;
-            let targetSection = sections[0];
-            let targetIndex = 0;
-
-            for (let i = 0; i < sections.length; i++) {
-                if (randomValue < accumulatedProbability + sections[i].probability) {
-                    targetSection = sections[i];
-                    targetIndex = i;
-                    break;
-                }
-                accumulatedProbability += sections[i].probability;
-            }
-
-            // Calcular el ángulo donde debe detenerse
-            let targetAngle = 90; // Empezamos en 90 grados (arriba donde está la flecha)
-            for (let i = 0; i < targetIndex; i++) {
-                targetAngle += (sections[i].probability / 100) * 360;
-            }
-            // Agregar una posición aleatoria dentro de la sección objetivo
-            targetAngle += (sections[targetIndex].probability / 100) * 360 * Math.random();
-
-            // Calcular rotación final (múltiples vueltas + posición final)
-            const finalRotation = currentRotation + (speed * 360) + targetAngle;
-
-            // Aplicar animación
             const canvas = document.getElementById('wheelCanvas');
-            canvas.style.transition = `transform ${duration}ms cubic-bezier(0.23, 1, 0.32, 1)`;
-            canvas.style.transform = `rotate(${finalRotation}deg)`;
-
+            const startTime = Date.now();
+            
             // Sonido de giro
-            playSpinSound();
+            playSound(200, 0.1, 'sawtooth');
 
-            currentRotation = finalRotation;
+            function animate() {
+                const elapsed = Date.now() - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                // Función de easing para desaceleración
+                const easeOut = 1 - Math.pow(1 - progress, 3);
+                const rotation = currentRotation + (totalRotation * easeOut);
+                
+                canvas.style.transform = `rotate(${rotation}deg)`;
+                
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                } else {
+                    currentRotation = (currentRotation + totalRotation) % 360;
+                    finishSpin(currentRotation);
+                }
+            }
 
-            // Resultado después de la animación
+            animate();
+        }
+
+        function finishSpin(finalAngle) {
+            const winner = getWinningSectionFromAngle(finalAngle);
+            
+            // Marcar cupón como usado
+            couponUsed = true;
+            updateCouponStatus();
+            
+            // Determinar si es premio raro (probabilidad <= 15%)
+            const isRare = winner.section.probability <= 15;
+            
             setTimeout(() => {
+                if (isRare) {
+                    playRareWinSound();
+                    showResult(winner.section, true);
+                    createConfetti();
+                } else {
+                    playWinSound();
+                    showResult(winner.section, false);
+                }
+                
                 isSpinning = false;
+                const spinButton = document.getElementById('spinButton');
                 spinButton.disabled = false;
                 spinButton.textContent = '🎯 ¡GIRAR RULETA!';
-                
-                // Verificar qué sección ganó basándose en la posición final de la flecha
-                const winningSection = getWinningSectionFromAngle(finalRotation);
-                showResult(winningSection.section);
-            }, duration);
+            }, 500);
         }
 
-        function playSpinSound() {
-            // Sonido de giro progresivo
-            let frequency = 200;
-            const interval = setInterval(() => {
-                playSound(frequency, 0.1, 'square');
-                frequency += 20;
-                if (frequency > 800) frequency = 200;
-            }, 100);
-
-            setTimeout(() => {
-                clearInterval(interval);
-            }, parseFloat(document.getElementById('spinDuration').value) * 1000);
-        }
-
-        function showResult(section) {
-            // Determinar si es premio raro (probabilidad <= 15%)
-            const isRare = section.probability <= 15;
-            
-            // Crear overlay de resultado
+        function showResult(section, isRare = false) {
             const overlay = document.createElement('div');
             overlay.className = 'result-overlay';
-            overlay.onclick = () => overlay.remove();
-
+            
             const content = document.createElement('div');
-            content.className = isRare ? 'result-content rare-prize' : 'result-content';
+            content.className = `result-content ${isRare ? 'rare-prize' : ''}`;
             
-            let resultText = `🎉 ¡FELICIDADES! 🎉<br><br>`;
-            resultText += `<div style="font-size: 2rem; margin: 20px 0;">${section.name}</div>`;
-            
+            let resultText = '';
             if (section.type === 'discount') {
-                resultText += `<div style="font-size: 1.2rem; opacity: 0.9;">¡Obtuviste un descuento del ${section.value}%!</div>`;
+                resultText = `🎉 ¡FELICITACIONES! 🎉<br><br>
+                             🏆 Has ganado: <strong>${section.name}</strong><br><br>
+                             💰 Descuento del ${section.value}%<br><br>
+                             📞 Contacta a Flex Store para reclamar tu premio`;
             } else {
-                resultText += `<div style="font-size: 1.2rem; opacity: 0.9;">¡Has ganado este increíble premio!</div>`;
+                resultText = `🎉 ¡FELICITACIONES! 🎉<br><br>
+                             🏆 Has ganado: <strong>${section.name}</strong><br><br>
+                             📞 Contacta a Flex Store para reclamar tu premio`;
             }
             
-            resultText += `<br><div style="font-size: 0.9rem; opacity: 0.7;">Haz clic para cerrar</div>`;
+            content.innerHTML = `
+                ${resultText}
+                <br><br>
+                <button onclick="closeResult()" style="
+                    background: rgba(0,0,0,0.7);
+                    border: 2px solid white;
+                    color: white;
+                    padding: 10px 20px;
+                    border-radius: 10px;
+                    cursor: pointer;
+                    margin-top: 20px;
+                    font-weight: bold;
+                ">Cerrar</button>
+            `;
             
-            content.innerHTML = resultText;
             overlay.appendChild(content);
             document.body.appendChild(overlay);
-
-            // Efectos especiales para premios raros
-            if (isRare) {
-                playRareWinSound();
-                createConfetti();
-            } else {
-                playWinSound();
-            }
-
-            // Auto-cerrar después de 10 segundos
+            
+            // Cerrar automáticamente después de 10 segundos
             setTimeout(() => {
-                if (overlay.parentNode) {
-                    overlay.remove();
+                if (document.body.contains(overlay)) {
+                    closeResult();
                 }
             }, 10000);
         }
 
-        // Inicialización
-        document.addEventListener('DOMContentLoaded', function() {
-            renderSections();
-            drawWheel();
-            
-            // Permitir audio después de interacción del usuario
-            document.addEventListener('click', function initAudio() {
-                if (audioContext.state === 'suspended') {
-                    audioContext.resume();
-                }
-                document.removeEventListener('click', initAudio);
-            });
-        });
-
-        // Funciones adicionales para mejorar la experiencia
-        function resetWheel() {
-            if (isSpinning) return;
-            
-            const canvas = document.getElementById('wheelCanvas');
-            canvas.style.transition = 'transform 1s ease-out';
-            canvas.style.transform = 'rotate(0deg)';
-            currentRotation = 0;
+        function closeResult() {
+            const overlay = document.querySelector('.result-overlay');
+            if (overlay) {
+                overlay.remove();
+            }
         }
 
-        function exportConfiguration() {
+        function createConfetti() {
+            const colors = ['#FFD700', '#FF4444', '#44FF44', '#4444FF', '#FF44FF'];
+            
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDelay = Math.random() * 2 + 's';
+                    confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                    
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => {
+                        if (document.body.contains(confetti)) {
+                            confetti.remove();
+                        }
+                    }, 5000);
+                }, i * 50);
+            }
+        }
+
+        // Sistema de cupones por archivo
+        function loadCouponFile() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            input.style.display = 'none';
+            
+            input.onchange = function(event) {
+                const file = event.target.files[0];
+                if (!file) return;
+                
+                // Verificar que sea un archivo JSON
+                if (!file.name.toLowerCase().endsWith('.json')) {
+                    alert('❌ Solo se permiten archivos .json');
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const couponData = JSON.parse(e.target.result);
+                        processCouponFile(couponData, file.name);
+                    } catch (error) {
+                        alert('❌ Error al leer el archivo: Formato JSON inválido');
+                        console.error('Error parsing JSON:', error);
+                    }
+                };
+                reader.readAsText(file);
+            };
+            
+            document.body.appendChild(input);
+            input.click();
+            document.body.removeChild(input);
+        }
+
+        function processCouponFile(couponData, fileName) {
+            // Validar estructura del cupón
+            if (!validateCouponStructure(couponData)) {
+                alert('❌ Estructura de cupón inválida');
+                return;
+            }
+            
+            // Verificar que las probabilidades sumen 100%
+            const totalProbability = couponData.sections.reduce((sum, section) => sum + section.probability, 0);
+            if (totalProbability !== 100) {
+                alert(`❌ Las probabilidades del cupón deben sumar 100% (actual: ${totalProbability}%)`);
+                return;
+            }
+            
+            // Cargar configuración del cupón
+            sections = couponData.sections.map(section => ({
+                name: section.name || 'Sin nombre',
+                probability: section.probability || 0,
+                color: section.color || getRandomColor(),
+                type: section.type || 'custom',
+                value: section.value || 0
+            }));
+            
+            // Aplicar configuraciones de giro si están disponibles
+            if (couponData.spinDuration) {
+                document.getElementById('spinDuration').value = couponData.spinDuration;
+            }
+            if (couponData.spinSpeed) {
+                document.getElementById('spinSpeed').value = couponData.spinSpeed;
+            }
+            
+            // Marcar cupón como cargado
+            couponLoaded = true;
+            couponUsed = false;
+            
+            // Actualizar interfaz
+            renderSections();
+            drawWheel();
+            updateCouponStatus();
+            
+            alert(`✅ Cupón "${fileName}" cargado exitosamente`);
+        }
+
+        function validateCouponStructure(data) {
+            // Verificar que tenga la estructura básica
+            if (!data || typeof data !== 'object') return false;
+            if (!Array.isArray(data.sections)) return false;
+            if (data.sections.length < 2) return false;
+            
+            // Verificar cada sección
+            for (const section of data.sections) {
+                if (typeof section !== 'object') return false;
+                if (typeof section.name !== 'string') return false;
+                if (typeof section.probability !== 'number') return false;
+                if (section.probability < 0 || section.probability > 100) return false;
+                if (typeof section.color !== 'string') return false;
+                if (typeof section.type !== 'string') return false;
+                if (typeof section.value !== 'number') return false;
+            }
+            
+            return true;
+        }
+
+        // Función para crear cupón de ejemplo
+        function downloadSampleCoupon() {
+            const sampleCoupon = {
+                "sections": [
+                    {
+                        "name": "Descuento 50%",
+                        "probability": 10,
+                        "color": "#FF4444",
+                        "type": "discount",
+                        "value": 50
+                    },
+                    {
+                        "name": "Descuento 25%",
+                        "probability": 20,
+                        "color": "#FF6666",
+                        "type": "discount",
+                        "value": 25
+                    },
+                    {
+                        "name": "Regalo gratis",
+                        "probability": 30,
+                        "color": "#44FF44",
+                        "type": "bonus",
+                        "value": 0
+                    },
+                    {
+                        "name": "Intenta de nuevo",
+                        "probability": 40,
+                        "color": "#CCCCCC",
+                        "type": "none",
+                        "value": 0
+                    }
+                ],
+                "spinDuration": "4",
+                "spinSpeed": "6"
+            };
+            
+            const dataStr = JSON.stringify(sampleCoupon, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'cupon_ejemplo.json';
+            link.style.display = 'none';
+            
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            URL.revokeObjectURL(url);
+        }
+
+        // Función para exportar configuración actual
+        function exportCurrentConfig() {
+            const totalProbability = sections.reduce((sum, section) => sum + section.probability, 0);
+            if (totalProbability !== 100) {
+                alert('❌ No se puede exportar: las probabilidades deben sumar 100%');
+                return;
+            }
+            
             const config = {
                 sections: sections,
                 spinDuration: document.getElementById('spinDuration').value,
@@ -1000,83 +1711,151 @@ function spinWheel() {
             
             const link = document.createElement('a');
             link.href = url;
-            link.download = 'ruleta_config.json';
+            link.download = `cupon_personalizado_${Date.now()}.json`;
+            link.style.display = 'none';
+            
+            document.body.appendChild(link);
             link.click();
+            document.body.removeChild(link);
             
             URL.revokeObjectURL(url);
         }
 
-        function importConfiguration(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    const config = JSON.parse(e.target.result);
-                    
-                    if (config.sections && Array.isArray(config.sections)) {
-                        sections = config.sections;
-                        renderSections();
-                        drawWheel();
-                    }
-                    
-                    if (config.spinDuration) {
-                        document.getElementById('spinDuration').value = config.spinDuration;
-                    }
-                    
-                    if (config.spinSpeed) {
-                        document.getElementById('spinSpeed').value = config.spinSpeed;
-                    }
-                    
-                    alert('✅ Configuración importada correctamente');
-                } catch (error) {
-                    alert('❌ Error al importar configuración: ' + error.message);
-                }
-            };
-            reader.readAsText(file);
+        // Función para resetear cupón (solo para pruebas)
+        function resetCoupon() {
+            couponLoaded = false;
+            couponUsed = false;
+            updateCouponStatus();
         }
 
-        // Funciones de validación
-        function validateProbabilities() {
-            const total = sections.reduce((sum, section) => sum + section.probability, 0);
-            return total === 100;
+        // Agregar botones de gestión de cupones
+        function addCouponManagementButtons() {
+            const managementDiv = document.createElement('div');
+            managementDiv.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                z-index: 1000;
+            `;
+            
+            const loadBtn = document.createElement('button');
+            loadBtn.textContent = '📁 Cargar Cupón';
+            loadBtn.onclick = loadCouponFile;
+            loadBtn.style.cssText = `
+                background: #28a745;
+                border: none;
+                color: white;
+                padding: 10px 15px;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 12px;
+                font-weight: bold;
+            `;
+            
+            const sampleBtn = document.createElement('button');
+            sampleBtn.textContent = '📥 Cupón Ejemplo';
+            sampleBtn.onclick = downloadSampleCoupon;
+            sampleBtn.style.cssText = `
+                background: #17a2b8;
+                border: none;
+                color: white;
+                padding: 10px 15px;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 12px;
+                font-weight: bold;
+            `;
+            
+            const resetBtn = document.createElement('button');
+            resetBtn.textContent = '🔄 Reset';
+            resetBtn.onclick = resetCoupon;
+            resetBtn.style.cssText = `
+                background: #dc3545;
+                border: none;
+                color: white;
+                padding: 10px 15px;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 12px;
+                font-weight: bold;
+            `;
+            
+            managementDiv.appendChild(loadBtn);
+            managementDiv.appendChild(sampleBtn);
+            managementDiv.appendChild(resetBtn);
+            document.body.appendChild(managementDiv);
         }
 
-        function autoAdjustProbabilities() {
-            if (sections.length === 0) return;
-            
-            const evenProbability = Math.floor(100 / sections.length);
-            const remainder = 100 - (evenProbability * sections.length);
-            
-            sections.forEach((section, index) => {
-                section.probability = evenProbability + (index < remainder ? 1 : 0);
-            });
-            
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', function() {
             renderSections();
             drawWheel();
-        }
-
-        // Agregar botones adicionales al HTML
-        function addExtraControls() {
-            const controlsSection = document.querySelector('.control-panel');
-            const extraButtons = document.createElement('div');
-            extraButtons.style.textAlign = 'center';
-            extraButtons.style.marginTop = '20px';
-            extraButtons.innerHTML = `
-                <button class="update-button" onclick="resetWheel()" style="margin: 5px;">🔄 Resetear</button>
-                <button class="update-button" onclick="autoAdjustProbabilities()" style="margin: 5px;">⚡ Auto-Ajustar</button>
-                <button class="update-button" onclick="exportConfiguration()" style="margin: 5px;">💾 Exportar</button>
-                <input type="file" id="importFile" accept=".json" onchange="importConfiguration(event)" style="display: none;">
-                <button class="update-button" onclick="document.getElementById('importFile').click()" style="margin: 5px;">📁 Importar</button>
-            `;
-            controlsSection.appendChild(extraButtons);
-        }
-
-        // Ejecutar cuando la página esté lista
-        window.addEventListener('load', function() {
-            setTimeout(addExtraControls, 100);
+            addCouponManagementButtons();
+            
+            // Inicializar audio context en el primer click
+            document.addEventListener('click', function initAudio() {
+                audioContext.resume();
+                document.removeEventListener('click', initAudio);
+            }, { once: true });
+            
+            // Cargar cupón desde archivo si se arrastra
+            document.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                document.body.style.background = 'linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%), rgba(40, 167, 69, 0.1)';
+            });
+            
+            document.addEventListener('dragleave', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                document.body.style.background = 'linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%)';
+            });
+            
+            document.addEventListener('drop', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                document.body.style.background = 'linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%)';
+                
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    const file = files[0];
+                    if (file.name.toLowerCase().endsWith('.json')) {
+                        const reader = new FileReader();
+                        reader.onload = function(event) {
+                            try {
+                                const couponData = JSON.parse(event.target.result);
+                                processCouponFile(couponData, file.name);
+                            } catch (error) {
+                                alert('❌ Error al leer el archivo: Formato JSON inválido');
+                            }
+                        };
+                        reader.readAsText(file);
+                    } else {
+                        alert('❌ Solo se permiten archivos .json');
+                    }
+                }
+            });
         });
+
+        // Prevenir zoom en móviles
+        document.addEventListener('touchstart', function(e) {
+            if (e.touches.length > 1) {
+                e.preventDefault();
+            }
+        });
+
+        // Cerrar resultado con ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeResult();
+            }
+        });
+    </script>
+</body>
+</html>
     </script>
 </body>
 </html>
